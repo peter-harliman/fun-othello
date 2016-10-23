@@ -52,6 +52,11 @@ my_widget::my_widget ( QWidget *parent )
         }
     }
 
+    /* create scoreboard */
+    score = 0;
+    scoreboard = new QLabel(QString::number(score));
+    gridLayout->addWidget(scoreboard);
+
     /* construct layouts */
     setLayout(gridLayout) ;
 }
@@ -63,6 +68,7 @@ void my_widget::button_clicked() {
     std::cout << obj << std::endl;
 
     obj->update_state(turn);
+    score += turn;
 
     /* update other boxes */
     button_flip(obj->row, obj->col,  1, 0);
@@ -74,12 +80,13 @@ void my_widget::button_clicked() {
     button_flip(obj->row, obj->col, 1,  1);
     button_flip(obj->row, obj->col, 1, -1);
 
-
     /* toggle turn */
     if (turn == STATE_WHITE)
         turn = STATE_BLACK;
     else if (turn == STATE_BLACK)
         turn = STATE_WHITE;
+
+    scoreboard->setText(QString::number(score));
 }
 
 void my_widget::button_flip(int x, int y, int x_axis, int y_axis)
@@ -97,6 +104,7 @@ void my_widget::button_flip(int x, int y, int x_axis, int y_axis)
             j -= y_axis;
             while (i != x || j != y) {
                 grid[i][j]->update_state(turn);
+                score += turn * 2;
                 i -= x_axis;
                 j -= y_axis;
             }

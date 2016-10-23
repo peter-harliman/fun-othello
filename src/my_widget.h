@@ -20,6 +20,7 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QGridLayout>
+#include <QLabel>
 
 enum button_state_e {
     STATE_BLACK = -1,
@@ -56,6 +57,8 @@ private :
     static const int max_row = 8;
     button_state_e turn;
     my_button* grid[max_column][max_row];
+    int score;
+    QLabel* scoreboard;
     QGridLayout *gridLayout;
 };
 #endif
