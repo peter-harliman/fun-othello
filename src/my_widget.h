@@ -21,6 +21,26 @@
 #include <QPushButton>
 #include <QGridLayout>
 
+enum button_state_e {
+    STATE_BLACK = -1,
+    STATE_BLANK = 0,
+    STATE_WHITE = 1,
+};
+
+class my_button : public QPushButton {
+    Q_OBJECT
+
+public:
+    void update_state(enum button_state_e new_state);
+    int row;
+    int col;
+    enum button_state_e state;
+
+private:
+
+};
+
+
 class my_widget : public QWidget {
 
     Q_OBJECT
@@ -29,10 +49,13 @@ public:
 
 private slots:
     void button_clicked();
+    void button_flip(int x, int y, int x_axis, int y_axis);
+
 private :
     static const int max_column = 8;
     static const int max_row = 8;
-    QPushButton* grid[max_column][max_row];
+    button_state_e turn;
+    my_button* grid[max_column][max_row];
     QGridLayout *gridLayout;
 };
 #endif
